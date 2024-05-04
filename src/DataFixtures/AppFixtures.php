@@ -3,7 +3,9 @@
 namespace App\DataFixtures;
 
 use Faker\Factory;
+use App\Entity\Task;
 use App\Entity\User;
+use DateTimeImmutable;
 use Faker\Generator;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -20,7 +22,11 @@ class AppFixtures extends Fixture {
 
         $this->createTydooAccount($manager);
 
+        $this->createAnnonymousAccount($faker, $manager);
+
         $this->createUsers($faker, $manager);
+
+        $this->createTasks($faker, $manager);
     }
 
     private function createTydooAccount(ObjectManager $manager): void {
@@ -31,6 +37,13 @@ class AppFixtures extends Fixture {
         $manager->persist($user->setPassword($this->passwordHasher->hashPassword($user, '112233')));
     }
 
+    private function createAnnonymousAccount(Generator $faker, ObjectManager $manager): void {
+        $manager->persist((new User())
+            ->setUsername('anonymous')
+            ->setEmail('anonymous@mail.com')
+            ->setPassword($faker->password()));
+    }
+
     private function createUsers(Generator $faker, ObjectManager $manager): void {
         for ($i = 0; $i < 50; $i++) {
             $manager->persist((new User())
@@ -38,6 +51,21 @@ class AppFixtures extends Fixture {
                 ->setEmail($faker->unique()->email())
                 ->setPassword($faker->password()));
         }
+        $manager->flush();
+    }
+
+    private function createTasks(Generator $faker, ObjectManager $manager): void {
+        $users = $manager->getRepository(User::class)->findAll();
+        $anonymous = $manager->getRepository(User::class)->findOneBy(['username' => 'anonymous']);
+        for ($i = 0; $i < 5000; $i++) {
+            $manager->persist((new Task())
+                ->setTitle($faker->sentence())
+                ->setContent($faker->paragraph())
+                ->setDone($faker->boolean(80))
+                ->setCreatedAt(DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-10 year')))
+                ->setUser($faker->randomElement([$anonymous, ...$users])));
+        }
+
         $manager->flush();
     }
 }
