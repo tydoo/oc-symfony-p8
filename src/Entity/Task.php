@@ -17,7 +17,7 @@ class Task {
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'Vous devez saisir un titre.')]
@@ -30,15 +30,20 @@ class Task {
     #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
     private ?bool $done = false;
 
+    #[ORM\ManyToOne(inversedBy: 'tasks')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank(message: 'Vous devez associer une tâche à un utilisateur.')]
+    private ?User $user = null;
+
     public function getId(): ?int {
         return $this->id;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable {
+    public function getCreatedAt(): ?DateTimeImmutable {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static {
+    public function setCreatedAt(DateTimeImmutable $createdAt): static {
         $this->createdAt = $createdAt;
 
         return $this;
@@ -77,5 +82,15 @@ class Task {
     #[ORM\PrePersist]
     public function onPrePersist(): void {
         $this->createdAt = $this->createdAt ?? new DateTimeImmutable();
+    }
+
+    public function getUser(): ?User {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static {
+        $this->user = $user;
+
+        return $this;
     }
 }
