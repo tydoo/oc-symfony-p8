@@ -21,7 +21,7 @@ class RegistrationFormType extends AbstractType {
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Adresse email',
-                'help' => 'Votre adresse email ne peut pas contenir plus de 180 caractères.'
+                'help' => 'Votre adresse email ne peut pas contenir plus de 60 caractères.'
             ])
             ->add('plainPassword', PasswordType::class, [
                 'label' => 'Mot de passe',
