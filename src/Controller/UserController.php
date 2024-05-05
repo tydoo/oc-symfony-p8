@@ -24,14 +24,14 @@ class UserController extends AbstractController {
 
     #[IsGranted('ROLE_ADMIN')]
     #[Route('', name: '_list', methods: ['GET'])]
-    public function user_list(): Response {
+    public function userList(): Response {
         return $this->render('user/user_list.html.twig', [
             'users' => $this->userRepository->findAll(),
         ]);
     }
 
     #[Route('/create', name: '_create')]
-    public function user_create(
+    public function userCreate(
         Request $request,
         Security $security
     ): Response {
@@ -59,7 +59,7 @@ class UserController extends AbstractController {
     }
 
     #[Route('/{id}/edit', name: '_edit')]
-    public function user_edit(
+    public function userEdit(
         User $user,
         Request $request
     ): Response {
