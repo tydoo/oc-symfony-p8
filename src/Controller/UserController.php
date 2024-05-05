@@ -13,7 +13,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[Route('/users', name: 'user', methods: ['GET', 'POST'])]
 class UserController extends AbstractController {
 
     public function __construct(
@@ -21,15 +23,19 @@ class UserController extends AbstractController {
     ) {
     }
 
-    #[Route('/users/create', name: 'user_create', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/', name: '_list', methods: ['GET'])]
+    public function user_list(): Response {
+        return $this->render('user/user_list.html.twig', [
+            'users' => $this->userRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/create', name: '_create')]
     public function user_create(
         Request $request,
         Security $security
     ): Response {
-        if ($this->getUser()) {
-            return new RedirectResponse($this->generateUrl('homepage'));
-        }
-
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -38,9 +44,12 @@ class UserController extends AbstractController {
 
             $user = $this->userRepository->add($user, $form->get('plainPassword')->getData());
 
-            $security->login($user, LoginFormAuthenticator::class);
-
-            $this->addFlash('success', 'Votre compte a été créé avec succès. Vous êtes maintenant connecté. Bienvenue !');
+            if ($this->getUser() === null) {
+                $security->login($user, LoginFormAuthenticator::class);
+                $this->addFlash('success', 'Votre compte a été créé avec succès. Vous êtes maintenant connecté. Bienvenue !');
+            } else {
+                $this->addFlash('success', 'L\'utilisateur a été créé avec succès.');
+            }
 
             return $this->redirectToRoute('homepage');
         }
@@ -50,7 +59,7 @@ class UserController extends AbstractController {
         ]);
     }
 
-    #[Route('/users/{id}/edit', name: 'user_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: '_edit')]
     public function user_edit(
         User $user,
         Request $request
