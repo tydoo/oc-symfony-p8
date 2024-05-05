@@ -36,7 +36,11 @@
 		<div class="container">
 			<div class="row">
 				{% if app.user %}
-					<a href="{{ path('logout') }}" class="pull-right btn btn-danger">Se déconnecter</a>
+					<a href="{{ path('logout') }}" class="btn btn-danger">Se déconnecter</a>
+					<a href="{{ path('user_edit', {id:app.user.id}) }}" class="btn btn-primary">Modifier mon compte</a>
+					{% if is_granted('ROLE_ADMIN') %}
+						<a href="" class="btn btn-secondary">Consulter la liste des utilisateurs</a>
+					{% endif %}
 				{% else %}
 					{% if app.request.attributes.get('_route') != 'user_create' %}
 						<a href="{{ path('user_create') }}" class="btn btn-primary">Créer un utilisateur</a>
