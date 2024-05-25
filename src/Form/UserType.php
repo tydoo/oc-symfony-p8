@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -12,6 +13,12 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class UserType extends AbstractType {
+
+    public function __construct(
+        private readonly Security $security
+    ) {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void {
         $builder
             ->add('username', null, [
@@ -36,6 +43,7 @@ class UserType extends AbstractType {
                 ],
                 'multiple' => true,
                 'expanded' => true,
+                'disabled' => !$this->security->isGranted('ROLE_ADMIN'),
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Modifier l\'utilisateur',

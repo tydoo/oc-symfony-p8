@@ -57,13 +57,13 @@ class AppFixtures extends Fixture {
     private function createTasks(Generator $faker, ObjectManager $manager): void {
         $users = $manager->getRepository(User::class)->findAll();
         $anonymous = $manager->getRepository(User::class)->findOneBy(['username' => 'anonymous']);
-        for ($i = 0; $i < 5000; $i++) {
+        for ($i = 0; $i < 1000; $i++) {
             $manager->persist((new Task())
                 ->setTitle($faker->sentence())
                 ->setContent($faker->paragraph())
                 ->setDone($faker->boolean(80))
                 ->setCreatedAt(DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-10 year')))
-                ->setUser($faker->randomElement([$anonymous, ...$users])));
+                ->setUser($faker->boolean(80) ? $anonymous : $faker->randomElement($users)));
         }
 
         $manager->flush();
