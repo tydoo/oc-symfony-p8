@@ -30,23 +30,3 @@ symfony console d:m:m --no-interaction
 symfony console d:f:l --no-interaction
 symfony serve -d
 ```
-
-### Implémentation de l'authentification
-
-L'authentification utilise les authentificators de symfony via leurs "Badges".
-
-La configuration est la suivante :
-
-- Les utilisateurs sont stockés en base de données
-- Le mot de passe est haché.
-- ``username`` est utilisé comme propriété unique pour l'authentification.
-
-Toute la configuration se trouve dans le fichier ``config/packages/security.yaml``
-
-Il n'y a qu'un seul authenticator implémenté : ``App\Security\LoginFormAuthenticator``.
-
-L'authenticator est branché sur ``Symfony\Component\Security\Http\Authenticator\AbstractLoginFormAuthenticator`` et écoute les requêtes ``POST`` qui proviennent de ``/login``.
-
-Si le mot de passe est correct suivant l'username, alors il délivre un badge valide et redirige vers la page d'accueil. Sinon, il génère l'erreur dans le formulaire et renvois vers la page de login.
-
-@see https://symfony.com/doc/current/security.html
