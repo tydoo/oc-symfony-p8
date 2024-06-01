@@ -1,4 +1,4 @@
-[![SymfonyInsight](https://insight.symfony.com/projects/85f2c9ca-e2d6-4f6f-9220-2d19f85aa89b/big.svg)](https://insight.symfony.com/projects/85f2c9ca-e2d6-4f6f-9220-2d19f85aa89b)
+[![SymfonyInsight](https://insight.symfony.com/projects/85f2c9ca-e2d6-4f6f-9220-2d19f85aa89b/big.svg)](https://insight.symfony.com/projects/85f2c9ca-e2d6-4f6f-9220-2d19f85aa89b) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/e025ab3688064e60aaded2c1c75eb922)](https://app.codacy.com/gh/tydoo/oc-symfony-p8/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 # PROJET 8
 ## Formation Développeur d'application - PHP/Symfony - OpenClassrooms
