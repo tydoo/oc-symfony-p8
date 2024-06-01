@@ -30,3 +30,13 @@ symfony console d:m:m --no-interaction
 symfony console d:f:l --no-interaction
 symfony serve -d
 ```
+
+### Tests
+
+```bash
+composer install
+docker-compose up -d
+symfony console d:m:m --no-interaction --env=test
+symfony console d:f:l --no-interaction --env=test
+php bin/phpunit
+```

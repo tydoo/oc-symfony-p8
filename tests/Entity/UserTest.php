@@ -7,7 +7,7 @@ use App\Entity\User;
 use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase {
-    public function testSomething(): void {
+    public function testUser(): void {
         $user = new User();
         $user->setUsername('testU');
         $user->setAdmin(true);
