@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block header_img %}<img class="slide-image" src="{{ asset('images/todolist_content.jpg') }}" alt="todo list">
+{% endblock %}
+
+{% block body %}
+	<h1>{{ title }}</h1>
+	{{ form_start(form_task) }}
+	{{ form_row(form_task.title) }}
+	{{ form_row(form_task.content) }}
+	<p>Utilisateur lié à la tache :
+		{{ task.user.username }}</p>
+	{{ form_end(form_task) }}
+{% endblock %}
