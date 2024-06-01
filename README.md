@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ac43a375ec1d44428bfedb145ea5b031)](https://app.codacy.com/gh/tydoo/oc-symfony-p8?utm_source=github.com&utm_medium=referral&utm_content=tydoo/oc-symfony-p8&utm_campaign=Badge_Grade)
 [![SymfonyInsight](https://insight.symfony.com/projects/85f2c9ca-e2d6-4f6f-9220-2d19f85aa89b/big.svg)](https://insight.symfony.com/projects/85f2c9ca-e2d6-4f6f-9220-2d19f85aa89b)
 
 # PROJET 8
