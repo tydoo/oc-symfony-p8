@@ -41,7 +41,7 @@ class UserController extends AbstractController {
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $user = $this->userRepository->add($user, $form->get('plainPassword')->getData());
+            $user = $this->userRepository->add($user, $form->get('password')->getData());
 
             if ($this->getUser() === null) {
                 $security->login($user, LoginFormAuthenticator::class);
