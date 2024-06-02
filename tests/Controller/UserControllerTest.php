@@ -57,9 +57,11 @@ class UserControllerTest extends WebTestCase {
         $crawler = $this->client->request('GET', '/users/create');
         $this->assertResponseIsSuccessful();
 
+        $userUnik = 'usertest-' . rand(0, 100000000) - time() - rand(0, 100000000);
+
         $form = $crawler->selectButton("Ajouter l'utilisateur")->form([
-            'user[username]' => 'usertest-' . rand(0, 1000),
-            'user[email]' => 'usertest-' . rand(0, 1000) . '@test.fr',
+            'user[username]' => $userUnik,
+            'user[email]' => $userUnik . '@test.fr',
             'user[password][first]' => '112233',
             'user[password][second]' => '112233'
         ]);
